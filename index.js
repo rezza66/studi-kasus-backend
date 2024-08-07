@@ -2,6 +2,7 @@ import express from 'express';
 import dotenv from 'dotenv';
 import path from 'path';
 import passport from 'passport';
+import cors from 'cors';
 import { connectDB } from './config/database.js';
 import authRoute from './routes/authRoute.js';
 import userRoute from './routes/userRoute.js';
@@ -19,6 +20,8 @@ dotenv.config();
 
 const app = express();
 const port = process.env.PORT
+
+app.use(cors())
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());

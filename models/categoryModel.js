@@ -7,7 +7,12 @@ const categorySchema = new mongoose.Schema({
         maxlength: [20, 'Panjang nama kategori maksimal 20 karakter'],
         required: true,
         trim: true
-    }
+    },
+    image: {
+        type: String,
+        required: true,
+        trim: true
+    },
     
 });
 

@@ -1,4 +1,5 @@
 import express from "express";
+import { upload } from "../config/multer.js";
 import {
   createCategory,
   deleteCategory,
@@ -12,7 +13,7 @@ const router = express.Router();
 router.get("/categories", getCategories);
 router.get("/category/:id", getCategoryById);
 router.post("/category", createCategory);
-router.put("/category/:id", updateCategory);
+router.put("/category/:id", upload, updateCategory);
 router.delete("/category/:id", deleteCategory);
 
 export default router;
