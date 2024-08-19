@@ -37,7 +37,7 @@ const deliveryAddressSchema = new mongoose.Schema(
       ref: "User",
     },
   },
-  { timestamp: true }
+  { timestamps: true }
 );
 
 export default mongoose.model("DeliveryAddress", deliveryAddressSchema);

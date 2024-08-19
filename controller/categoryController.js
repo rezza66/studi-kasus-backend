@@ -21,14 +21,31 @@ export const createCategory = async (req, res, next) => {
     }
   };
 
-export const getCategories = async (req, res, next) => {
-  try {
-    const categories = await Category.find();
-    res.json(categories);
-  } catch (error) {
-    next(error);
-  }
-};
+  export const getCategories = async (req, res, next) => {
+    try {
+      const categories = await Category.find();
+      
+      // Base URL untuk gambar
+      const baseUrl = `${req.protocol}://${req.get("host")}/uploads/`;
+  
+      // Memformat URL gambar untuk kategori jika diperlukan
+      const categoriesWithImageUrl = categories.map((category) => {
+        // Memastikan kategori memiliki field image dan memformat URL-nya
+        const imagePath = category.image ? category.image.replace(/^uploads\/|\\/g, "/") : null;
+        const formattedImageUrl = imagePath ? baseUrl + imagePath.replace(/^uploads\//, "") : null;
+        return {
+          ...category._doc, // Memastikan semua field kategori dikembalikan
+          image: formattedImageUrl, // Menambahkan URL gambar yang telah diformat
+        };
+      });
+  
+      // Mengirimkan response dengan kategori yang telah diformat
+      res.json(categoriesWithImageUrl);
+    } catch (error) {
+      next(error); // Menangani error dengan middleware error handling
+    }
+  };
+  
 
 export const getCategoryById = async (req, res, next) => {
   try {

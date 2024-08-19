@@ -15,6 +15,7 @@ import orderRoute from "./routes/orderRoute.js";
 import invoiceRoute from "./routes/invoiceRoute.js";
 import { errorHandler } from './middleware/errorHandler.js';
 import configurePassport from './config/passport.js';
+import morgan from 'morgan';
 
 dotenv.config();
 
@@ -22,7 +23,7 @@ const app = express();
 const port = process.env.PORT
 
 app.use(cors())
-
+app.use(morgan('dev'));
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
@@ -34,15 +35,15 @@ configurePassport();
 
 app.use(passport.initialize());
 
-app.use(authRoute);
-app.use(userRoute);
-app.use(productRoute);
-app.use(tagRoute); 
-app.use(categoryRoute); 
-app.use(deliveryAddressRoute); 
-app.use(cartRoute); 
-app.use(orderRoute); 
-app.use(invoiceRoute); 
+app.use('/auth', authRoute);
+app.use('/api', userRoute);
+app.use('/api', productRoute);
+app.use('/api', tagRoute); 
+app.use('/api', categoryRoute); 
+app.use('/api', deliveryAddressRoute); 
+app.use('/api', cartRoute); 
+app.use('/api', orderRoute); 
+app.use('/api', invoiceRoute); 
 
 app.use(errorHandler);
 
